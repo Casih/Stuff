@@ -1,9 +1,5 @@
-# In[1]:
-
 import random
-
-
-# In[4]:
+import numpy as np
 
 A='A' #aleatorio
 B='B' #sensing
@@ -14,19 +10,14 @@ def cea():
  typelist = [typeA,typeB]
  return random.choice(typelist)
 
-
-# In[5]:
-
-n = 300
+n = 3 #largo de la caja ie nxnxn
+m = 10 # numero de generaciones
 culture = [[[0 for k in xrange(n)] for j in xrange(n)] for i in xrange(n)]
 
 for k in xrange(n):
  for j in xrange(n):
   for i in xrange(n):
    culture[i][j][k] = cea()         
-
-
-# In[6]:
 
 def countcell():
  cellcount = []
@@ -50,15 +41,10 @@ def countcell():
  cellcount.append(nump1)
  cellcount.append(nump2)           
  return cellcount
-def column(matrix, i):
-    return [row[i] for row in matrix]    
-
-
-# In[11]:
 
 Results = []
 Ambiente = []
-for t in range(50):
+for t in range(m):
  ambiente = random.randint(1,3)
  Ambiente.append(ambiente)   
  for k in xrange(n):
@@ -91,22 +77,19 @@ for t in range(50):
  Results.append(countcell())    
 
 
-# In[17]:
+#def column(matrix, i):
+#    return [row[i] for row in matrix]    
+#from pylab import *
+#figure(figsize=(20,20))
+#plot(linspace(0,500,50),column(Results,2),'k-',lw=2,label='Phenotype1')
+#plot(linspace(0,500,50),column(Results,3),'b-',lw=2,label='Phenotype2')
+#plot(linspace(0,500,50),column(Results,0),'g--',lw=2,label='GenotypeA')
+#plot(linspace(0,500,50),column(Results,1),'r--',lw=2,label='GenotypeB')
+#plot(linspace(0,500,50),Ambiente,'m^')
+#ylim([-1,27])
+#xlim([1,100])
+#legend(loc='upper left')
+#savefig("results.png")
 
-from pylab import *
-figure(figsize=(20,20))
-plot(linspace(0,500,50),column(Results,2),'k-',lw=2,label='Phenotype1')
-plot(linspace(0,500,50),column(Results,3),'b-',lw=2,label='Phenotype2')
-plot(linspace(0,500,50),column(Results,0),'g--',lw=2,label='GenotypeA')
-plot(linspace(0,500,50),column(Results,1),'r--',lw=2,label='GenotypeB')
-plot(linspace(0,500,50),Ambiente,'m^')
-ylim([-1,27])
-xlim([1,100])
-legend(loc='upper left')
-savefig("results.png")
 
-
-# In[44]:
-
-import numpy as np
-np.savetxt("output.csv", Results , delimiter=",", fmt='%s')
+np.savetxt("output.csv", Results + ambiente , delimiter=",", fmt='%s')
